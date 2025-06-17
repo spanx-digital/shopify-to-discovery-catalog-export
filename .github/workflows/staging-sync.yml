@@ -17,8 +17,7 @@ jobs:
 
     env:
       # Map region to environment variables and secrets
-      BR_SHOPIFY_URL: ${{ vars[format('BR_SHOPIFY_URL_{0}', matrix.region)] }}
-      BR_ENVIRONMENT_NAME: ${{ vars[format('BR_ENVIRONMENT_NAME_{0}', matrix.region)] }}
+      BR_SHOPIFY_URL: ${{ vars[format('BR_SHOPIFY_URL_DEV_{0}', matrix.region)] }}
       BR_ACCOUNT_ID: ${{ vars[format('BR_ACCOUNT_ID_{0}', matrix.region)] }}
       BR_CATALOG_NAME: ${{ vars[format('BR_CATALOG_NAME_{0}', matrix.region)] }}
 
