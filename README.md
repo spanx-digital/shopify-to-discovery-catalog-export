@@ -53,7 +53,7 @@ Exact steps:
 3. Click Apps and sales channels in the left nav
 4. Click Develop apps
 5. Click Create an app
-6. Give it a name like `Bloomreach Test`
+6. Give it the name `Bloomreach Discovery Product Catalog`
 7. Click Configure Admin API scopes
 8. Select `read_products` as a scope
 9. Click Save
