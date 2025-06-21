@@ -95,6 +95,9 @@ def create_attributes(shopify_object, namespace):
       continue
     if "metafields" in k:
       for metafield in v:
+        # skip metafields that should not be included in attributes
+        if not should_include_metafield(metafield, namespace):
+          continue
         # each metafield key/value added to attributes with namespace
         attribute_name = namespace + "m." + metafield["namespace"] + "." + metafield["key"]
         # This is a hacky way of doing this to cover all the list use cases
@@ -118,6 +121,17 @@ def create_category_paths(collections):
     paths.append([{"id": collection["handle"], "name": collection["title"]}])
   
   return paths
+
+# Determine whether the Metafield should be included in the attributes
+def should_include_metafield(metafield, namespace):
+  # Check Product metafields
+  if namespace == "sp":
+    if metafield["namespace"] == "custom" and metafield["key"] in ["spanx_effect", "spanx_collection", "lifecycle", "final_sale", "markdown_type", "return_rate", "seasonality", "intended_use", "length", "rise", "silhouette", "compression_level", "compression_zones", "activity_level"]:
+      return True
+  # Check Variant metafields
+  elif namespace == "sv":
+    return False
+  return False
 
 
 def main(fp_in, fp_out, pid_props, vid_props):
