@@ -4,6 +4,7 @@ import jsonlines
 import logging
 from collections import defaultdict
 from os import getenv
+from spanx import should_include_product
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +23,8 @@ def parse_shopify_objects(fp):
     for k in objects.keys():
       if "/Product/" in k and "/Collection/" not in k:
         product = create_product_from_objects(k, objects, parent_to_children)
-        products.append(product)
+        if should_include_product(product):
+          products.append(product)
 
   return products
 
