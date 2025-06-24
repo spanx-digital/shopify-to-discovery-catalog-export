@@ -2,7 +2,14 @@
 def should_include_metafield(metafield, bloomreach_namespace):
   # Check Product metafields
   if bloomreach_namespace == "sp":
-    if metafield["namespace"] == "custom" and metafield["key"] in ["spanx_effect", "spanx_collection", "lifecycle", "final_sale", "markdown_type", "return_rate", "seasonality", "intended_use", "length", "rise", "silhouette", "compression_level", "compression_zones", "activity_level"]:
+    # Check the `custom_fields` namespace
+    if metafield["namespace"] == "custom_fields" and metafield["key"] in ["spanx_effect", "spanx_collection", "return_rate", "seasonality", "intended_use", "length", "rise", "silhouette", "compression_level", "compression_zones", "activity_level"]:
+      return True
+    # Check the `app--6007307--sanity-fields` namespace
+    if metafield["namespace"] == "app--6007307--sanity-fields" and metafield["key"] in ["lifecycle", "domesticFinalSale", "markdown_type"]:
+      return True
+    # Check the `combined_listing` namespace
+    if metafield["namespace"] == "combined_listing" and metafield["key"] in ["is_parent", "is_child", "parent_product"]:
       return True
   # Check Variant metafields
   elif bloomreach_namespace == "sv":
