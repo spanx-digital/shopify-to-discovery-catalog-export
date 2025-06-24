@@ -11,7 +11,10 @@ PRODUCT_MAPPINGS = [
   ["sp.descriptionHtml", "description", lambda x: x.strip()],
   ["sp.title", "title", lambda x: x],
   ["sp.priceRangeV2", "maxVariantPrice", lambda x: x["maxVariantPrice"]["amount"]], # https://github.com/bloomreach/shopify-to-discovery-catalog-export/pull/2/files
-  ["sp.priceRangeV2", "minVariantPrice", lambda x: x["minVariantPrice"]["amount"]] # https://github.com/bloomreach/shopify-to-discovery-catalog-export/pull/2/files
+  ["sp.priceRangeV2", "minVariantPrice", lambda x: x["minVariantPrice"]["amount"]], # https://github.com/bloomreach/shopify-to-discovery-catalog-export/pull/2/files
+  ["sp.seo", "seoDescription", lambda x: x["description"]], # Destructure the seo attributes
+  ["sp.seo", "seoTitle", lambda x: x["title"]], # Destructure the seo attributes
+  ["sp.featuredImage", "featuredImage", lambda x: x["url"]] # Destructure the featured image attributes
 ]
 
 
