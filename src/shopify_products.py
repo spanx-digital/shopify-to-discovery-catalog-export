@@ -4,7 +4,7 @@ import jsonlines
 import logging
 from collections import defaultdict
 from os import getenv
-from spanx import should_include_product
+from spanx import should_include_product, use_hydrogen_status
 
 logger = logging.getLogger(__name__)
 
@@ -61,6 +61,9 @@ def create_product_from_objects(k, objects, parent_to_children):
   product["collections"] = collections
   product["variants"] = variants
   product["metafields"] = metafields
+
+  # Use Hydrogen Status, if present
+  product["status"] = use_hydrogen_status(product)
 
   return product
 

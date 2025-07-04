@@ -25,3 +25,14 @@ def should_include_product(product):
   if product["tags"] and "no_index" in product["tags"]:
     return False
   return True
+
+# Use Hydrogen Status, if present
+def use_hydrogen_status(product):
+  # Check if the product has `Status` tags
+  if product["tags"]:
+    if "Status:Active" in product["tags"]:
+      return "ACTIVE"
+    elif "Status:Draft" in product["tags"]:
+      return "DRAFT"
+  # Default to regular status
+  return product["status"]
