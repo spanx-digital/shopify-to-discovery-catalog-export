@@ -3,7 +3,7 @@ import json
 import jsonlines
 import logging
 from os import getenv
-from spanx import should_include_metafield
+from spanx import should_include_metafield, use_legacy_identifier
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +31,7 @@ def create_product(shopify_product, pid_identifiers = None, vid_identifiers = No
     #   attributes["sp." + prop] = v
 
   return {
-    "id": shopify_product["id"].split('/')[-1], # https://github.com/bloomreach/shopify-to-discovery-catalog-export/pull/2/files
+    "id": use_legacy_identifier(shopify_product["id"]), # https://github.com/bloomreach/shopify-to-discovery-catalog-export/pull/2/files
     "attributes": create_attributes(shopify_product, "sp"), 
     "variants": create_variants(shopify_product, identifiers=vid_identifiers)
     }
@@ -47,11 +47,14 @@ def create_id(shopify_object, identifiers = None):
 
   for identifier in identifiers:
     if identifier in shopify_object and shopify_object[identifier]:
-      id = shopify_object[identifier]
+      if identifier == "id":
+        id = use_legacy_identifier(shopify_object[identifier])
+      else:
+        id = shopify_object[identifier]
       break
     elif "id" in shopify_object:
       # If `id`` isn't supplied as custom identifier, use `id` as it should always be present
-      id = shopify_object["id"]
+      id = use_legacy_identifier(shopify_object["id"])
 
   return id
 
@@ -118,7 +121,7 @@ def create_attributes(shopify_object, namespace):
 def create_category_paths(collections):
   paths = []
   for collection in collections:
-    paths.append([{"id": collection["id"], "name": collection["title"]}])
+    paths.append([{"id": use_legacy_identifier(collection["id"]), "name": collection["title"]}])
   
   return paths
 
