@@ -36,3 +36,11 @@ def use_hydrogen_status(product):
       return "DRAFT"
   # Default to regular status
   return product["status"]
+
+# Use legacy identifier, instead of gid
+def use_legacy_identifier(shopify_identifier):
+  if shopify_identifier is None:
+    return None
+  if "gid" in shopify_identifier:
+    return shopify_identifier.split("/")[-1]
+  return shopify_identifier

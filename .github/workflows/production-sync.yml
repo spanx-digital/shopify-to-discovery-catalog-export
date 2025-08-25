@@ -48,7 +48,7 @@ jobs:
           python src/shopify_products.py --input-file=./${{ env.RUNNUM }}/0_shopify_bulk_op.jsonl.gz --output-file=./${{ env.RUNNUM }}/1_shopify_products.jsonl.gz
       - name: Transform to discovery generic products
         run: |
-          python src/bloomreach_generics.py --input-file=./${{ env.RUNNUM }}/1_shopify_products.jsonl.gz --output-file=./${{ env.RUNNUM }}/2_bloomreach_base.jsonl.gz --pid-props="handle" --vid-props="sku"
+          python src/bloomreach_generics.py --input-file=./${{ env.RUNNUM }}/1_shopify_products.jsonl.gz --output-file=./${{ env.RUNNUM }}/2_bloomreach_base.jsonl.gz --pid-props="handle" --vid-props="id"
       - name: Transform to discovery products
         run: |
           python src/bloomreach_products.py --input-file=./${{ env.RUNNUM }}/2_bloomreach_base.jsonl.gz --output-file=./${{ env.RUNNUM }}/3_bloomreach_products.jsonl.gz
