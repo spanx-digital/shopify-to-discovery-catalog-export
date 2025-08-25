@@ -115,11 +115,10 @@ def create_attributes(shopify_object, namespace):
   return attributes
 
 
-# TODO: pass in id and name properties to override defaults
 def create_category_paths(collections):
   paths = []
   for collection in collections:
-    paths.append([{"id": collection["handle"], "name": collection["title"]}])
+    paths.append([{"id": collection["id"], "name": collection["title"]}])
   
   return paths
 
