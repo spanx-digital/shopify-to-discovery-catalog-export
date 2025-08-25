@@ -31,7 +31,7 @@ def main(shopify_url="",
   brGenerics(shopify_products_fp,
              generic_products_fp,
              pid_props="handle",
-             vid_props="sku,id")
+             vid_props="id")
   brProducts(generic_products_fp, br_products_fp, shopify_url)
   brPatch(br_products_fp, br_patch_fp)
   patch_catalog(br_patch_fp,
