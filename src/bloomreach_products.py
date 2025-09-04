@@ -85,16 +85,13 @@ def create_product(product, shopify_url):
       out_va["price"] = in_va["sv.price"]
 
     # set color, size from selectedOptions
-    # TODO: set other options to custom attributes
+    # set other options to custom attributes
     if "sv.selectedOptions" in in_va:
       if in_va["sv.selectedOptions"] and len(in_va["sv.selectedOptions"]) > 0:
         for option in in_va["sv.selectedOptions"]:
-          if "name" in option and "value" in option and "Color" in option[
-              "name"]:
+          if "name" in option and "value" in option and "Color" in option["name"]:
             out_va["color"] = option["value"]
-            # br_va["variants_color"] = option["value"]
-          if "name" in option and "value" in option and "Size" in option[
-              "name"]:
+          if "name" in option and "value" in option and "Size" in option["name"]:
             out_va["size"] = option["value"]
 
     out_va["availability"] = False
