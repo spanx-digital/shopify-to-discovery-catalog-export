@@ -89,10 +89,22 @@ def create_product(product, shopify_url):
     if "sv.selectedOptions" in in_va:
       if in_va["sv.selectedOptions"] and len(in_va["sv.selectedOptions"]) > 0:
         for option in in_va["sv.selectedOptions"]:
-          if "name" in option and "value" in option and "Color" in option["name"]:
-            out_va["color"] = option["value"]
-          if "name" in option and "value" in option and "Size" in option["name"]:
-            out_va["size"] = option["value"]
+          if "name" in option and "value" in option:
+            option_value = option["value"]
+            if "Color" in option["name"]:
+              out_va["color"] = option_value
+            if "Size" in option["name"]:
+              out_va["size"] = option_value
+            if "Inseam" in option["name"]:
+              out_va["inseam"] = option_value
+            if "Band Size" in option["name"]:
+              out_va["band_size"] = option_value
+            if "Cup Size" in option["name"]:
+              out_va["cup_size"] = option_value
+            if "Size Type" in option["name"]:
+              out_va["size_type"] = option_value
+            if "Sizing" in option["name"]:
+              out_va["sizing"] = option_value
 
     out_va["availability"] = False
     if "sv.availableForSale" in in_va and in_va["sv.availableForSale"]:
