@@ -3,10 +3,10 @@ def should_include_metafield(metafield, bloomreach_namespace):
   # Check Product metafields
   if bloomreach_namespace == "sp":
     # Check the `custom_fields` namespace
-    if metafield["namespace"] == "custom_fields" and metafield["key"] in ["spanx_effect", "spanx_collection", "lifecycle", "return_rate", "seasonality", "intended_use", "length", "rise", "silhouette", "compression_level", "compression_zones", "activity_level"]:
+    if metafield["namespace"] == "custom_fields" and metafield["key"] in ["built_in_features", "length_description", "spanx_effect", "spanx_collection", "lifecycle", "return_rate", "seasonality", "intended_use", "length", "rise", "silhouette", "compression_level", "compression_zones", "activity_level"]:
       return True
     # Check the `custom` namespace
-    if metafield["namespace"] == "custom" and metafield["key"] in ["dom_final_sale", "markdown_type"]:
+    if metafield["namespace"] == "custom" and metafield["key"] in ["category", "combined_markdown_type", "dom_final_sale", "markdown_type"]:
       return True
     # Check the `combined_listing` namespace
     if metafield["namespace"] == "combined_listing" and metafield["key"] in ["is_parent", "is_child", "parent_product"]:
