@@ -1,3 +1,8 @@
+import logging
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 METAFIELDS_CUSTOM = [
   "category",
   "combined_markdown_type",
@@ -87,6 +92,7 @@ def get_option_value(option):
 def get_supported_option_attribute_name(option):
   if has_option_data(option):
     option_name = option["name"].lower().strip()
+    logger.debug(f"Option name: {option_name}")
     if "color" in option_name:
       return "color"
     if "size" in option_name:
