@@ -3,7 +3,7 @@ import gzip
 import json
 import jsonlines
 from os import getenv
-from spanx import get_option_value, get_supported_option_attribute_name, has_option_data, is_supported_option
+from spanx import get_desired_size_value, get_option_value, get_supported_option_attribute_name, has_option_data, is_supported_option
 
 logger = logging.getLogger(__name__)
 
@@ -94,6 +94,7 @@ def create_product(product, shopify_url):
             option_value = get_option_value(option)
             if is_supported_option(option):
               out_va[get_supported_option_attribute_name(option)] = option_value
+    out_va["size"] = get_desired_size_value(out_va)
 
     out_va["availability"] = False
     if "sv.availableForSale" in in_va and in_va["sv.availableForSale"]:

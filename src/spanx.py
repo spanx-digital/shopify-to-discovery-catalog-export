@@ -1,8 +1,3 @@
-import logging
-
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
 METAFIELDS_CUSTOM = [
   "category",
   "combined_markdown_type",
@@ -92,30 +87,30 @@ def get_option_value(option):
 def get_supported_option_attribute_name(option):
   if has_option_data(option):
     option_name = option["name"].lower().strip()
+    if "inseam" == option_name:
+      return "inseam"
+    if "band size" == option_name:
+      return "band_size"
+    if "cup size" == option_name:
+      return "cup_size"
+    if "size type" == option_name:
+      return "size_type"
+    if "sizing" == option_name:
+      return "sizing"
     if "color" in option_name:
       return "color"
     if "size" in option_name:
       return "size"
-    if "inseam" == option_name:
-      return "inseam"
-    if "band size" == option_name:
-      logger.debug(f"Option name: {option_name} was found as band_size")
-      return "band_size"
-    if "cup size" == option_name:
-      logger.debug(f"Option name: {option_name} was found as cup_size")
-      return "cup_size"
-    if "size type" == option_name:
-      logger.debug(f"Option name: {option_name} was found as size_type")
-      return "size_type"
-    if "sizing" == option_name:
-      logger.debug(f"Option name: {option_name} was found as sizing")
-      return "sizing"
   return None
 
 # Determine whether the option is supported
 def is_supported_option(option):
-  option_name = option["name"].lower().strip()
-  is_supported = get_supported_option_attribute_name(option) is not None
-  logger.debug(f"Option name: {option_name}")
-  logger.debug(f"Is supported: {is_supported}")
-  return is_supported
+  return get_supported_option_attribute_name(option) is not None
+
+# Determine the desired "size" from attributes
+def get_desired_size_value(attributes):
+  if "size" in attributes:
+    return attributes["size"]
+  if "cup_size" in attributes and "band_size" in attributes:
+    return f"{attributes['band_size']}{attributes['cup_size']}"
+  return None
