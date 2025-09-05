@@ -3,6 +3,7 @@ import gzip
 import json
 import jsonlines
 from os import getenv
+from spanx import get_option_value, get_supported_option_attribute_name, has_option_data, is_supported_option
 
 logger = logging.getLogger(__name__)
 
@@ -89,22 +90,10 @@ def create_product(product, shopify_url):
     if "sv.selectedOptions" in in_va:
       if in_va["sv.selectedOptions"] and len(in_va["sv.selectedOptions"]) > 0:
         for option in in_va["sv.selectedOptions"]:
-          if "name" in option and "value" in option:
-            option_value = option["value"]
-            if "Color" in option["name"]:
-              out_va["color"] = option_value
-            if "Size" in option["name"]:
-              out_va["size"] = option_value
-            if "Inseam" in option["name"]:
-              out_va["inseam"] = option_value
-            if "Band Size" in option["name"]:
-              out_va["band_size"] = option_value
-            if "Cup Size" in option["name"]:
-              out_va["cup_size"] = option_value
-            if "Size Type" in option["name"]:
-              out_va["size_type"] = option_value
-            if "Sizing" in option["name"]:
-              out_va["sizing"] = option_value
+          if has_option_data(option):
+            option_value = get_option_value(option)
+            if is_supported_option(option):
+              out_va[get_supported_option_attribute_name(option)] = option_value
 
     out_va["availability"] = False
     if "sv.availableForSale" in in_va and in_va["sv.availableForSale"]:

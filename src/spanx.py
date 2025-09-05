@@ -72,3 +72,36 @@ def use_legacy_identifier(shopify_identifier):
   if "gid" in shopify_identifier:
     return shopify_identifier.split("/")[-1]
   return shopify_identifier
+
+# Determine if the option has necessary data
+def has_option_data(option):
+  return "name" in option and "value" in option
+
+# Use the option value
+def get_option_value(option):
+  if has_option_data(option):
+    return option["value"]
+  return None
+
+# Determine the supported option attribute name
+def get_supported_option_attribute_name(option):
+  if has_option_data(option):
+    if "Color" in option["name"]:
+      return "color"
+    if "Size" in option["name"]:
+      return "size"
+    if "Inseam" in option["name"]:
+      return "inseam"
+    if "Band Size" in option["name"]:
+      return "band_size"
+    if "Cup Size" in option["name"]:
+      return "cup_size"
+    if "Size Type" in option["name"]:
+      return "size_type"
+    if "Sizing" in option["name"]:
+      return "sizing"
+  return None
+
+# Determine whether the option is supported
+def is_supported_option(option):
+  return get_supported_option_attribute_name(option) is not None
