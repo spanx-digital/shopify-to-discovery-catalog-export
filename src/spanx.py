@@ -86,19 +86,20 @@ def get_option_value(option):
 # Determine the supported option attribute name
 def get_supported_option_attribute_name(option):
   if has_option_data(option):
-    if "Color" in option["name"]:
+    option_name = option["name"].lower().strip()
+    if "color" in option_name:
       return "color"
-    if "Size" in option["name"]:
+    if "size" in option_name:
       return "size"
-    if "Inseam" in option["name"]:
+    if "inseam" == option_name:
       return "inseam"
-    if "Band Size" in option["name"]:
+    if "band size" == option_name:
       return "band_size"
-    if "Cup Size" in option["name"]:
+    if "cup size" == option_name:
       return "cup_size"
-    if "Size Type" in option["name"]:
+    if "size type" == option_name:
       return "size_type"
-    if "Sizing" in option["name"]:
+    if "sizing" == option_name:
       return "sizing"
   return None
 
