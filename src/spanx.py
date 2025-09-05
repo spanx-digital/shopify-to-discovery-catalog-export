@@ -92,7 +92,6 @@ def get_option_value(option):
 def get_supported_option_attribute_name(option):
   if has_option_data(option):
     option_name = option["name"].lower().strip()
-    logger.debug(f"Option name: {option_name}")
     if "color" in option_name:
       return "color"
     if "size" in option_name:
@@ -100,15 +99,23 @@ def get_supported_option_attribute_name(option):
     if "inseam" == option_name:
       return "inseam"
     if "band size" == option_name:
+      logger.debug(f"Option name: {option_name} was found as band_size")
       return "band_size"
     if "cup size" == option_name:
+      logger.debug(f"Option name: {option_name} was found as cup_size")
       return "cup_size"
     if "size type" == option_name:
+      logger.debug(f"Option name: {option_name} was found as size_type")
       return "size_type"
     if "sizing" == option_name:
+      logger.debug(f"Option name: {option_name} was found as sizing")
       return "sizing"
   return None
 
 # Determine whether the option is supported
 def is_supported_option(option):
-  return get_supported_option_attribute_name(option) is not None
+  option_name = option["name"].lower().strip()
+  is_supported = get_supported_option_attribute_name(option) is not None
+  logger.debug(f"Option name: {option_name}")
+  logger.debug(f"Is supported: {is_supported}")
+  return is_supported
