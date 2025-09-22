@@ -7,6 +7,8 @@ METAFIELDS_CUSTOM = [
 METAFIELDS_CUSTOM_FIELDS = [
   "activity_level",
   "built_in_features",
+  "color",
+  "color_group",
   "compression_level",
   "compression_zones",
   "intended_use",
