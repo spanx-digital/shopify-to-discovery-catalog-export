@@ -110,8 +110,21 @@ def create_attributes(shopify_object, namespace):
           attributes[attribute_name] = json.loads(metafield["value"])
         else:
           attributes[attribute_name] = metafield["value"]
+    elif "category" in k:
+      # Handle Shopify product category taxonomy
+      if v:
+        attributes["category_id"] = v.get("id", "")
+        attributes["category_name"] = v.get("name", "")
+        attributes["category"] = v.get("fullName", "")
     elif "collections" in k:
       attributes["category_paths"] = create_category_paths(v)
+      # Only set these if category taxonomy wasn't present
+      if "category_id" not in attributes:
+        attributes["category_id"] = create_category_ids(v)
+      if "category_name" not in attributes:
+        attributes["category_name"] = create_category_names(v)
+      if "category" not in attributes:
+        attributes["category"] = create_categories(v)
     else:
       # each object property added as attribute with namespace
       attributes[namespace + "." + k] = v
@@ -124,6 +137,49 @@ def create_category_paths(collections):
     paths.append([{"id": use_legacy_identifier(collection["id"]), "name": collection["title"]}])
   
   return paths
+
+
+def create_category_ids(collections):
+  """
+  Create category_id values from collections.
+  Returns a list of category IDs based on collection IDs.
+  """
+  category_ids = []
+  for collection in collections:
+    category_id = use_legacy_identifier(collection["id"])
+    if category_id:
+      category_ids.append(category_id)
+
+  return category_ids
+
+
+def create_category_names(collections):
+  """
+  Create category_name values from collections.
+  Returns a list of category names/titles.
+  """
+  category_names = []
+  for collection in collections:
+    if "title" in collection and collection["title"]:
+      category_names.append(collection["title"])
+
+  return category_names
+
+
+def create_categories(collections):
+  """
+  Create category values from collections.
+  Returns a list of category hierarchies as strings.
+  For example: "Apparel & Accessories > Clothing > Shorts > Denim Shorts"
+  """
+  categories = []
+  for collection in collections:
+    if "title" in collection and collection["title"]:
+      # For now, use the collection title as the category
+      # If hierarchical category data becomes available, this can be updated
+      categories.append(collection["title"])
+
+  return categories
 
 
 def main(fp_in, fp_out, pid_props, vid_props):
