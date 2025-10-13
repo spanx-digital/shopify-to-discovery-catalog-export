@@ -110,11 +110,21 @@ def create_attributes(shopify_object, namespace):
           attributes[attribute_name] = json.loads(metafield["value"])
         else:
           attributes[attribute_name] = metafield["value"]
+    elif "category" in k:
+      # Handle Shopify product category taxonomy
+      if v:
+        attributes["category_id"] = v.get("id", "")
+        attributes["category_name"] = v.get("name", "")
+        attributes["category"] = v.get("fullName", "")
     elif "collections" in k:
       attributes["category_paths"] = create_category_paths(v)
-      attributes["category_id"] = create_category_ids(v)
-      attributes["category_name"] = create_category_names(v)
-      attributes["category"] = create_categories(v)
+      # Only set these if category taxonomy wasn't present
+      if "category_id" not in attributes:
+        attributes["category_id"] = create_category_ids(v)
+      if "category_name" not in attributes:
+        attributes["category_name"] = create_category_names(v)
+      if "category" not in attributes:
+        attributes["category"] = create_categories(v)
     else:
       # each object property added as attribute with namespace
       attributes[namespace + "." + k] = v
